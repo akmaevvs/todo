@@ -7,7 +7,12 @@
 import TopHeader from "@/components/TopHeader.vue";
 
 export default {
-  components: { TopHeader }
+  components: { TopHeader },
+  data() {
+    return {
+      data: localStorage.getItem('storedNotes')
+    }
+  }
 };
 </script>
 
@@ -15,6 +20,8 @@ export default {
 * {
   margin: 0;
   padding: 0;
+  font-family: Gotham Pro;
+
 }
 body {
   background: #fafafa;
@@ -27,7 +34,6 @@ button {
   padding: 0;
 }
 input::placeholder {
-  font-family: Gotham Pro;
   color: #fff;
 }
 #app {
@@ -36,5 +42,10 @@ input::placeholder {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
 }
 </style>

@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
+import NoteList from '../views/NoteList.vue'
 // import Register from '../views/Register.vue'
 // import Login from '../views/Login.vue'
 // import Secret from '../views/Secret.vue'
@@ -7,11 +8,15 @@ import Home from '../views/Home.vue'
 // import firebase from 'firebase/compat/app'
 // import 'firebase/compat/auth'
 
-const routes = [
-  {
+const routes = [{
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/note-list',
+    name: 'NoteList',
+    component: NoteList,
   },
   // {
   //   path: '/login',
