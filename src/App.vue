@@ -1,30 +1,40 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view/>
+  <top-header />
+  <router-view />
 </template>
 
+<script>
+import TopHeader from "@/components/TopHeader.vue";
+
+export default {
+  components: { TopHeader }
+};
+</script>
+
 <style lang="scss">
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: #fafafa;
+}
+input,
+button {
+  outline: none;
+  border: none;
+  background: none;
+  padding: 0;
+}
+input::placeholder {
+  font-family: Gotham Pro;
+  color: #fff;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Gotham Pro, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
 }
 </style>
