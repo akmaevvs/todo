@@ -1,28 +1,39 @@
 <template>
   <top-header />
-  <router-view :taskGroup = "data" />
+  <router-view :taskGroup="data" v-on:change-tasks-event="changeTasks" />
 </template>
 
 <script>
-import TopHeader from "@/components/TopHeader.vue";
 
 export default {
-  components: { TopHeader },
   mounted() {
     if (localStorage.taskGroup) {
-      this.data = localStorage.taskGroup
+      console.log("asdfasdf", localStorage.taskGroup);
+      this.data = JSON.parse(localStorage.taskGroup)
+    } else {
+      console.log("basd");
+
     }
   },
   watch: {
-    data(newData) {
-      localStorage.taskGroup = newData;
+    data: {
+      deep: true,
+      handler(val) {
+        localStorage.taskGroup = JSON.stringify(val);
+
+      }
     }
   },
   data() {
     return {
-      data: null
+      data: []
     }
-  }
+  },
+  methods: {
+    changeTasks(newTaskGroup) {
+      this.data.push(newTaskGroup)
+    }
+  },
 };
 </script>
 

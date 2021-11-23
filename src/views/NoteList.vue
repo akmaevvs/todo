@@ -62,6 +62,9 @@
         </div>
       </div>
     </div>
+    <transition name="fade">
+      <standart-modal-info :show="showStandartModalInfo" :message="messageStandartModalInfo" v-on:close-standart-modal-info="closeStandartModalInfo"/>
+    </transition>
   </div>
 </template>
 
@@ -70,11 +73,17 @@
 <script>
 import paletteImg from "@/assets/palette.png";
 
+class StandartError extends Error {
+  constructor(message = "Ошибка") {
+    super(message);
+    this.name = "StandartError";
+  }
+}
+
 export default {
   name: "NoteList",
   props: {
     taskGroup: {
-      type: Array,
       default: null
     }
   },
@@ -85,8 +94,11 @@ export default {
   data() {
     return {
       paletteImg,
-      tasks: {},
+      tasks: [],
+      showStandartModalInfo: false,
+      messageStandartModalInfo: "",
       newTaskGroup: {
+        id: this.makeId(),
         title: null,
         tasks: [],
         backgroundColor: "#5cc95c",
@@ -122,6 +134,9 @@ export default {
     };
   },
   methods: {
+    closeStandartModalInfo() {
+      this.showStandartModalInfo = !this.showStandartModalInfo
+    },
     chageColor(color) {
       this.newTaskGroup.backgroundColor = color.backgroundColor;
       this.newTaskGroup.textColor = color.textColor;
@@ -156,10 +171,34 @@ export default {
       };
 
       this.newTaskGroup.tasks.push(newTask);
+
+      // console.log(this.newTaskGroup);
     },
     saveTask() {
-      this.taskGroup.push(newTaskGroup)
-      this.newTaskGroup = 
+      // console.log(this.newTaskGroup);
+      try {
+        if (this.newTaskGroup.title && this.newTaskGroup.tasks.length > 0) {
+          this.$emit('change-tasks-event', this.newTaskGroup)
+          this.newTaskGroup = {
+            id: this.makeId(),
+            title: null,
+            tasks: [],
+            backgroundColor: "#5cc95c",
+            textColor: "#ffffff"
+          }
+    
+
+          throw new StandartError("Группа успешно добавлена!")
+
+  
+        } else {
+          throw new StandartError("Проверьте данные!")
+        }
+
+      } catch (err) {
+        this.showStandartModalInfo = !this.showStandartModalInfo
+        this.messageStandartModalInfo = err.message
+      }
     }
   }
 };

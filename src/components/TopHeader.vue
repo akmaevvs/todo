@@ -13,6 +13,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 
 export default {
+  name: 'top-header',
   data() {
     return {
       loggedIn: false,
