@@ -15,17 +15,9 @@
           <img class="title-block__img-palette" :src="paletteImg" />
         </button>
         <transition name="fade">
-          <div
-            v-if="showPaletteVar"
-            class="modal-inner"
-            @click.self="showPaletteFunc()"
-          >
+          <div v-if="showPaletteVar" class="modal-inner" @click.self="showPaletteFunc()">
             <div class="modal-palette">
-              <span
-                class="modal-palette__close-modal"
-                @click.self="showPaletteFunc()"
-                >&#215;</span
-              >
+              <span class="modal-palette__close-modal" @click.self="showPaletteFunc()">&#215;</span>
               <h3 class="modal-palette__title">Цвет группы</h3>
               <div class="modal-palette__block-color">
                 <span
@@ -42,20 +34,11 @@
       </div>
       <div class="inner-content">
         <ul class="tasks-block">
-          <li
-            class="tasks-block__li-task"
-            v-for="task in newTaskGroup.tasks"
-            :key="task.id"
-          >
+          <li class="tasks-block__li-task" v-for="task in newTaskGroup.tasks" :key="task.id">
             <label class="container-complete" :for="task.id">
-              <input
-                type="checkbox"
-                :id="task.id"
-                :name="task.id"
-                v-model="task.complete"
-              />
+              <input type="checkbox" :id="task.id" :name="task.id" v-model="task.complete" />
               <span class="checkmark">
-                <template v-if="task.complete"> &#10004; </template>
+                <template v-if="task.complete">&#10004;</template>
               </span>
             </label>
             <input
@@ -64,24 +47,18 @@
               v-model="task.title"
               placeholder="Введите задачу"
             />
-            <span
-              class="tasks-block__close-task"
-              @click.self="deleteTask(task.id)"
-              >&#215;</span
-            >
+            <span class="tasks-block__close-task" @click.self="deleteTask(task.id)">&#215;</span>
           </li>
         </ul>
         <div class="add-task-block">
           <standart-button
             @click.prevent="addTask()"
             :style="`background-color:${newTaskGroup.backgroundColor}; color:${newTaskGroup.textColor}`"
-            >Добавить задачу</standart-button
-          >
+          >Добавить задачу</standart-button>
           <standart-button
             @click.prevent="saveTask()"
             :style="`background-color:${newTaskGroup.backgroundColor}; color:${newTaskGroup.textColor}`"
-            >Сохранить группу задач</standart-button
-          >
+          >Сохранить группу задач</standart-button>
         </div>
       </div>
     </div>
@@ -95,9 +72,14 @@ import paletteImg from "@/assets/palette.png";
 
 export default {
   name: "NoteList",
+  props: {
+    taskGroup: {
+      type: Array,
+      default: null
+    }
+  },
   watch: {
     // if (localStorage.taskGroup) {
-
     // }
   },
   data() {
@@ -108,35 +90,35 @@ export default {
         title: null,
         tasks: [],
         backgroundColor: "#5cc95c",
-        textColor: "#ffffff",
+        textColor: "#ffffff"
       },
       showPaletteVar: false,
       palette: [
         {
           backgroundColor: "#8a2be2",
-          textColor: "#ffffff",
+          textColor: "#ffffff"
         },
         {
           backgroundColor: "#faebd7",
-          textColor: "#3f3838",
+          textColor: "#3f3838"
         },
         {
           backgroundColor: "#a52a2a",
-          textColor: "#ffffff",
+          textColor: "#ffffff"
         },
         {
           backgroundColor: "#blueviolet",
-          textColor: "#3f3838",
+          textColor: "#3f3838"
         },
         {
           backgroundColor: "#blueviolet",
-          textColor: "#3f3838",
+          textColor: "#3f3838"
         },
         {
           backgroundColor: "#blueviolet",
-          textColor: "#3f3838",
-        },
-      ],
+          textColor: "#3f3838"
+        }
+      ]
     };
   },
   methods: {
@@ -159,7 +141,7 @@ export default {
       return text;
     },
     deleteTask(id) {
-      this.newTaskGroup.tasks = this.newTaskGroup.tasks.filter((task) => {
+      this.newTaskGroup.tasks = this.newTaskGroup.tasks.filter(task => {
         if (task.id != id) {
           return task;
         }
@@ -170,16 +152,16 @@ export default {
       const newTask = {
         complete: false,
         title: "",
-        id,
+        id
       };
 
       this.newTaskGroup.tasks.push(newTask);
     },
     saveTask() {
-      localStorage.setItem('taskGroup', JSON.stringify(this.newTaskGroup))
-      console.log(localStorage);
+      this.taskGroup.push(newTaskGroup)
+      this.newTaskGroup = 
     }
-  },
+  }
 };
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <top-header />
-  <router-view />
+  <router-view :taskGroup = "data" />
 </template>
 
 <script>
@@ -8,9 +8,19 @@ import TopHeader from "@/components/TopHeader.vue";
 
 export default {
   components: { TopHeader },
+  mounted() {
+    if (localStorage.taskGroup) {
+      this.data = localStorage.taskGroup
+    }
+  },
+  watch: {
+    data(newData) {
+      localStorage.taskGroup = newData;
+    }
+  },
   data() {
     return {
-      data: localStorage.getItem('storedNotes')
+      data: null
     }
   }
 };
