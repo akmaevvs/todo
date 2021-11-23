@@ -37,6 +37,7 @@ export default {
   transition: all 0.2s;
   cursor: pointer;
   text-decoration: none;
+  min-width: 50px;
   // box-shadow: 0px 0.2px 0.7px -2px rgba(0, 0, 0, 0.014),
   //   0px 0.5px 1.8px -2px rgba(0, 0, 0, 0.02),
   //   0px 0.9px 3.4px -2px rgba(0, 0, 0, 0.025),

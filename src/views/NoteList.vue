@@ -83,7 +83,7 @@ class StandartError extends Error {
 export default {
   name: "NoteList",
   props: {
-    taskGroup: {
+    newTaskGroupToChange: {
       default: null
     }
   },
@@ -252,15 +252,7 @@ export default {
 
   /* Style the checkmark/indicator */
 }
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s ease-in-out;
-}
 
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
 
 $tasks-block-border-color: #dfdfdf;
 $default-color: #5cc95c;
