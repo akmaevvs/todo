@@ -1,5 +1,10 @@
 <template>
   <div class="note-list">
+    <div class="title-info-block">
+      <p class="title-info-block__text">
+        Введите название группы и добавьте в нее задачи
+      </p>
+    </div>
     <div class="task-group">
       <div
         class="title-block"
@@ -9,15 +14,29 @@
           class="title-block__title"
           type="text"
           placeholder="Название группы"
+          :style="`background-color:${newTaskGroup.backgroundColor}; color:${newTaskGroup.textColor}`"
           v-model="newTaskGroup.title"
         />
         <button class="title-block__button-palette" @click="showPaletteFunc()">
-          <img class="title-block__img-palette" :src="paletteImg" />
+          <img
+            v-if="paletteDark"
+            class="title-block__img-palette"
+            :src="paletteImgDark"
+          />
+          <img v-else class="title-block__img-palette" :src="paletteImg" />
         </button>
         <transition name="fade">
-          <div v-if="showPaletteVar" class="modal-inner" @click.self="showPaletteFunc()">
+          <div
+            v-if="showPaletteVar"
+            class="modal-inner"
+            @click.self="showPaletteFunc()"
+          >
             <div class="modal-palette">
-              <span class="modal-palette__close-modal" @click.self="showPaletteFunc()">&#215;</span>
+              <span
+                class="modal-palette__close-modal"
+                @click.self="showPaletteFunc()"
+                >&#215;</span
+              >
               <h3 class="modal-palette__title">Цвет группы</h3>
               <div class="modal-palette__block-color">
                 <span
@@ -34,9 +53,18 @@
       </div>
       <div class="inner-content">
         <ul class="tasks-block">
-          <li class="tasks-block__li-task" v-for="task in newTaskGroup.tasks" :key="task.id">
+          <li
+            class="tasks-block__li-task"
+            v-for="task in newTaskGroup.tasks"
+            :key="task.id"
+          >
             <label class="container-complete" :for="task.id">
-              <input type="checkbox" :id="task.id" :name="task.id" v-model="task.complete" />
+              <input
+                type="checkbox"
+                :id="task.id"
+                :name="task.id"
+                v-model="task.complete"
+              />
               <span class="checkmark">
                 <template v-if="task.complete">&#10004;</template>
               </span>
@@ -47,31 +75,48 @@
               v-model="task.title"
               placeholder="Введите задачу"
             />
-            <span class="tasks-block__close-task" @click.self="deleteTask(task.id)">&#215;</span>
+            <span
+              class="tasks-block__close-task"
+              @click.self="deleteTask(task.id)"
+              >&#215;</span
+            >
           </li>
         </ul>
         <div class="add-task-block">
           <standart-button
             @click.prevent="addTask()"
             :style="`background-color:${newTaskGroup.backgroundColor}; color:${newTaskGroup.textColor}`"
-          >Добавить задачу</standart-button>
+            >Добавить задачу</standart-button
+          >
+
           <standart-button
+            v-if="this.$route.params.taskId"
+            @click.prevent="saveChanges()"
+            :style="`background-color:${newTaskGroup.backgroundColor}; color:${newTaskGroup.textColor}`"
+            >Сохранить изменения по группе</standart-button
+          >
+          <standart-button
+            v-else
             @click.prevent="saveTask()"
             :style="`background-color:${newTaskGroup.backgroundColor}; color:${newTaskGroup.textColor}`"
-          >Сохранить группу задач</standart-button>
+            >Сохранить группу задач</standart-button
+          >
         </div>
       </div>
     </div>
     <transition name="fade">
-      <standart-modal-info :show="showStandartModalInfo" :message="messageStandartModalInfo" v-on:close-standart-modal-info="closeStandartModalInfo"/>
+      <standart-modal-info
+        :show="showStandartModalInfo"
+        :message="messageStandartModalInfo"
+        v-on:close-standart-modal-info="closeStandartModalInfo"
+      />
     </transition>
   </div>
 </template>
 
-
-
 <script>
 import paletteImg from "@/assets/palette.png";
+import paletteImgDark from "@/assets/paletteDark.png";
 
 class StandartError extends Error {
   constructor(message = "Ошибка") {
@@ -84,8 +129,11 @@ export default {
   name: "NoteList",
   props: {
     newTaskGroupToChange: {
-      default: null
-    }
+      default: null,
+    },
+    taskGroup: {
+      default: null,
+    },
   },
   watch: {
     // if (localStorage.taskGroup) {
@@ -93,51 +141,88 @@ export default {
   },
   data() {
     return {
+      paletteDark: false,
       paletteImg,
+      paletteImgDark,
       tasks: [],
       showStandartModalInfo: false,
       messageStandartModalInfo: "",
+      showPaletteVar: false,
       newTaskGroup: {
         id: this.makeId(),
         title: null,
         tasks: [],
         backgroundColor: "#5cc95c",
-        textColor: "#ffffff"
+        textColor: "#ffffff",
       },
-      showPaletteVar: false,
       palette: [
         {
           backgroundColor: "#8a2be2",
-          textColor: "#ffffff"
+          textColor: "#ffffff",
         },
         {
           backgroundColor: "#faebd7",
-          textColor: "#3f3838"
+          textColor: "#3f3838",
         },
         {
           backgroundColor: "#a52a2a",
-          textColor: "#ffffff"
+          textColor: "#ffffff",
         },
         {
           backgroundColor: "#blueviolet",
-          textColor: "#3f3838"
+          textColor: "#3f3838",
         },
         {
           backgroundColor: "#blueviolet",
-          textColor: "#3f3838"
+          textColor: "#3f3838",
         },
         {
           backgroundColor: "#blueviolet",
-          textColor: "#3f3838"
-        }
-      ]
+          textColor: "#3f3838",
+        },
+      ],
     };
+  },
+  beforeMount() {
+    console.log(this.taskGroup);
+    document
+      .querySelector(":root")
+      .style.setProperty("--default-text-color", "#ffffff");
+
+    if (this.$route.params.taskId) {
+      console.log("yes");
+      console.log(this.$route.params.taskId);
+      this.newTaskGroup = this.taskGroup.filter((item) => {
+        if (item.id == this.$route.params.taskId) {
+          return item;
+        }
+      })[0];
+      this.newTaskGroup = JSON.parse(JSON.stringify(this.newTaskGroup));
+      console.log(this.newTaskGroup);
+    } else {
+      console.log("no");
+      this.newTaskGroup = {
+        id: this.makeId(),
+        title: null,
+        tasks: [],
+        backgroundColor: "#5cc95c",
+        textColor: "#ffffff",
+      };
+    }
   },
   methods: {
     closeStandartModalInfo() {
-      this.showStandartModalInfo = !this.showStandartModalInfo
+      this.showStandartModalInfo = !this.showStandartModalInfo;
     },
     chageColor(color) {
+      if (color.textColor === "#3f3838") {
+        this.paletteDark = true;
+      } else {
+        this.paletteDark = false;
+      }
+      document
+        .querySelector(":root")
+        .style.setProperty("--default-text-color", color.textColor);
       this.newTaskGroup.backgroundColor = color.backgroundColor;
       this.newTaskGroup.textColor = color.textColor;
       this.showPaletteVar = !this.showPaletteVar;
@@ -156,7 +241,7 @@ export default {
       return text;
     },
     deleteTask(id) {
-      this.newTaskGroup.tasks = this.newTaskGroup.tasks.filter(task => {
+      this.newTaskGroup.tasks = this.newTaskGroup.tasks.filter((task) => {
         if (task.id != id) {
           return task;
         }
@@ -167,44 +252,66 @@ export default {
       const newTask = {
         complete: false,
         title: "",
-        id
+        id,
       };
 
       this.newTaskGroup.tasks.push(newTask);
 
       // console.log(this.newTaskGroup);
     },
+    saveChanges() {
+      try {
+        if (this.newTaskGroup.title && this.newTaskGroup.tasks.length > 0) {
+          this.$emit("change-tasks-event", this.newTaskGroup);
+
+          throw new StandartError("Группа успешно обновлена!");
+        } else {
+          throw new StandartError("Проверьте данные!");
+        }
+      } catch (err) {
+        this.showStandartModalInfo = !this.showStandartModalInfo;
+        this.messageStandartModalInfo = err.message;
+      }
+    },
     saveTask() {
       // console.log(this.newTaskGroup);
       try {
         if (this.newTaskGroup.title && this.newTaskGroup.tasks.length > 0) {
-          this.$emit('change-tasks-event', this.newTaskGroup)
+          this.$emit("save-tasks-event", this.newTaskGroup);
           this.newTaskGroup = {
             id: this.makeId(),
             title: null,
             tasks: [],
             backgroundColor: "#5cc95c",
-            textColor: "#ffffff"
-          }
-    
+            textColor: "#ffffff",
+          };
 
-          throw new StandartError("Группа успешно добавлена!")
-
-  
+          throw new StandartError("Группа успешно добавлена!");
         } else {
-          throw new StandartError("Проверьте данные!")
+          throw new StandartError("Проверьте данные!");
         }
-
       } catch (err) {
-        this.showStandartModalInfo = !this.showStandartModalInfo
-        this.messageStandartModalInfo = err.message
+        this.showStandartModalInfo = !this.showStandartModalInfo;
+        this.messageStandartModalInfo = err.message;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+.note-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+.title-info-block {
+  &__text {
+    font-size: 18px;
+    font-weight: bold;
+  }
+}
 .container-complete {
   display: block;
   position: relative;
@@ -253,7 +360,7 @@ export default {
   /* Style the checkmark/indicator */
 }
 
-
+$default-text-color: #fff;
 $tasks-block-border-color: #dfdfdf;
 $default-color: #5cc95c;
 .modal-inner {
@@ -324,17 +431,17 @@ $default-color: #5cc95c;
   .title-block {
     display: flex;
     justify-content: center;
-    padding: 20px;
+    padding: 10px 20px;
     background: $default-color;
     border-radius: 5px 5px 0px 0px;
 
     &__title {
-      font-size: 30px;
+      font-size: 27px;
       color: #fff;
       width: 100%;
       &::placeholder {
         font-family: Gotham Pro;
-        color: #fff;
+        color: var(--default-text-color);
       }
     }
     &__img-palette {

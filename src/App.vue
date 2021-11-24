@@ -1,6 +1,6 @@
 <template>
   <top-header />
-  <router-view :taskGroup="data" v-on:change-tasks-event="changeTasks" />
+  <router-view :taskGroup="data" @change-tasks-event="changeTasks" v-on:save-tasks-event="saveTasks" v-on:delete-task="deleteTask" />
 </template>
 
 <script>
@@ -20,7 +20,6 @@ export default {
       deep: true,
       handler(val) {
         localStorage.taskGroup = JSON.stringify(val);
-
       }
     }
   },
@@ -31,14 +30,45 @@ export default {
   },
   methods: {
     changeTasks(newTaskGroup) {
+      this.data = JSON.parse(JSON.stringify(this.data.filter((item) => {
+        if (item.id == newTaskGroup.id) {
+          Object.keys(item).forEach((key) => {
+            item[key] = newTaskGroup[key]
+          })
+          return item
+        } else {
+          return item
+        }
+      })))
+      // this.data.filter((item) => {
+      //   if (item.id === newTaskGroup.id) {
+      //     return item
+      //   }
+      // })[0] = newTaskGroup
+
+      console.log(this.data);
+    },
+    saveTasks(newTaskGroup) {
       this.data.push(newTaskGroup)
+    },
+    deleteTask(id) {
+      console.log("app", id);
+      this.data = this.data.filter((item) => {
+        if (item.id != id) {
+          return item
+        }
+      })
     }
   },
 };
 </script>
 
 <style lang="scss">
-
+:root {
+  --default-text-color: #fff;
+  --tasks-block-border-color: #dfdfdf;
+  --default-background-color: #5cc95c;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.2s ease-in-out;

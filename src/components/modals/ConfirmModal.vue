@@ -6,7 +6,7 @@
         Вы уверены?
       </p>
       <div class="modal-button-block">
-        <standart-button @click="apply">Да</standart-button>
+        <standart-button @click="apply(id)">Да</standart-button>
         <standart-button class="no" @click="close">Нет</standart-button>
       </div>
     </div>
@@ -21,20 +21,13 @@ export default {
       type: Boolean,
       default: false,
     },
-    message: {
-      type: String,
-      default: "Ошибка!",
-    },
   },
   methods: {
-    showModal() {
-
-    },
     close() {
       this.$emit('close-confirm-modal')
     },
     apply() {
-      this.$emit('apply')
+      this.$emit('apply-confirm')
     }
   }
 };

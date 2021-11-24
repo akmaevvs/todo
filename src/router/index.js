@@ -14,7 +14,7 @@ const routes = [{
     component: Home
   },
   {
-    path: '/note-list',
+    path: '/note-list/:taskId?',
     name: 'NoteList',
     component: NoteList,
   },

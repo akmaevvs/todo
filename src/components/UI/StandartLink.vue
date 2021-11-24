@@ -6,17 +6,17 @@
 
 <script>
 export default {
-  name: 'standart-link', 
+  name: "standart-link",
   props: {
     href: {
       type: String,
-      default: "/"
+      default: "/",
     },
     hrefText: {
       type: String,
-      default: "Home"
-    }
-  }
+      default: "Home",
+    },
+  },
 };
 </script>
 
@@ -47,7 +47,6 @@ export default {
   &.router-link-active {
     color: #5cc95c;
     box-shadow: 0px 6px 10px -6px #5cc95c;
-
   }
   &:hover {
     color: #5cc95c;
@@ -59,6 +58,25 @@ export default {
     //   0px 1.6px 6px -2px rgba(0, 0, 0, 0.077),
     //   0px 2.9px 11.3px -2px rgba(0, 0, 0, 0.093),
     //   0px 7px 27px -2px rgba(0, 0, 0, 0.13);
+  }
+  &--plus {
+    border: 2px solid;
+    border-radius: 3px;
+    font-size: 72px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: auto;
+    width: 100%;
+    max-width: 460px;
+    margin: 0 auto;
+    box-shadow: 0px 0.2px 0.7px -2px rgba(0, 0, 0, 0.037),
+      0px 0.5px 1.8px -2px rgba(0, 0, 0, 0.053),
+      0px 0.9px 3.4px -2px rgba(0, 0, 0, 0.065),
+      0px 1.6px 6px -2px rgba(0, 0, 0, 0.077),
+      0px 2.9px 11.3px -2px rgba(0, 0, 0, 0.093),
+      0px 7px 27px -2px rgba(0, 0, 0, 0.13),
   }
 }
 </style>

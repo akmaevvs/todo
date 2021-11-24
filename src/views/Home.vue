@@ -7,10 +7,18 @@
         v-for="group in taskGroup"
         :key="group.id"
         :group="group"
-      >
-      </task-group-template>
+        @delete-task="deleteTask"
+      />
+      <standart-link class="link--plus" to="/note-list">+</standart-link>
     </div>
-    <p v-else>Создайте группу и добавьте в нее задачи</p>
+    <div v-else class="add-tasks-block">
+      <p class="add-tasks-block__text">
+        Создайте группу и добавьте в нее задачи
+      </p>
+      <standart-link class="add-tasks-block__link link--plus" to="/note-list"
+        >+</standart-link
+      >
+    </div>
   </div>
 </template>
 
@@ -21,6 +29,12 @@ export default {
   props: {
     taskGroup: {
       default: null,
+    },
+  },
+  methods: {
+    deleteTask(id) {
+      console.log("home", id);
+      this.$emit("delete-task", id);
     },
   },
   data() {
@@ -38,6 +52,11 @@ export default {
   width: 100%;
   max-width: 940px;
   margin: 0 auto;
+}
+.add-tasks-block {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 .home {
   display: flex;

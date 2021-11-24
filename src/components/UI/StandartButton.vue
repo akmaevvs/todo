@@ -6,23 +6,23 @@
 
 <script>
 export default {
-  name: 'standart-button', 
+  name: "standart-button",
   props: {
     href: {
       type: String,
-      default: "/home"
+      default: "/home",
     },
     hrefText: {
       type: String,
-      default: "Домой"
-    }
-  }
+      default: "Домой",
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .button {
-  background: #5cc95c;
+  background-color: #5cc95c;
   box-sizing: border-box;
   width: 100%;
   padding: 2px 10px;
@@ -38,6 +38,13 @@ export default {
   cursor: pointer;
   text-decoration: none;
   min-width: 50px;
+  box-shadow: 0px 0px 10px 0px #0000000f;
+  font-size: 14px;
+  &--note {
+    background-color: var(--default-background-color);
+    color: var(--default-text-color);
+  }
+
   // box-shadow: 0px 0.2px 0.7px -2px rgba(0, 0, 0, 0.014),
   //   0px 0.5px 1.8px -2px rgba(0, 0, 0, 0.02),
   //   0px 0.9px 3.4px -2px rgba(0, 0, 0, 0.025),
