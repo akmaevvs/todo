@@ -40,6 +40,7 @@ export default {
     left: 0;
     right: 0;
     background: #0000009a;
+    z-index: 2;
   }
 
   &-content {

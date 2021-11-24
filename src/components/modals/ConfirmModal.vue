@@ -35,7 +35,6 @@ export default {
 
 <style lang="scss" scoped>
 .modal {
-  z-index: 20;
   &-inner {
     display: flex;
     position: absolute;
@@ -46,6 +45,7 @@ export default {
     background: #0000009a;
     justify-content: center;
     align-items: center;
+    z-index: 2;
   }
 
   &-content {

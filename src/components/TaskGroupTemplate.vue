@@ -46,18 +46,6 @@
           />
         </li>
       </ul>
-      <!-- <div class="add-task-block">
-              <standart-button
-                @click.prevent="addTask()"
-                :style="`background-color:${group.backgroundColor}; color:${group.textColor}`"
-                >Добавить задачу</standart-button
-              >
-              <standart-button
-                @click.prevent="saveTask()"
-                :style="`background-color:${group.backgroundColor}; color:${group.textColor}`"
-                >Сохранить группу задач</standart-button
-              >
-            </div> -->
     </div>
   </div>
   <transition name="fade">
@@ -125,7 +113,6 @@ $default-color: #5cc95c;
     width: 25px;
     height: 25px;
     font-size: 25px;
-    // color: #fff;
     cursor: pointer;
     line-height: 25px;
     border-radius: 3px;
@@ -148,7 +135,6 @@ $default-color: #5cc95c;
       color: #b12424;
     }
   }
-
 }
 
 .task-group {
@@ -157,11 +143,9 @@ $default-color: #5cc95c;
   width: 100%;
   max-width: 460px;
   margin: 0 auto;
-  height: 100%;
-  // border: 1px solid #f1f1f1;
+  height: auto;
   background: #fff;
   border-radius: 5px;
-  // padding: 40px;
   box-sizing: border-box;
   box-shadow: 1.2px 0.7px 2.2px rgba(0, 0, 0, 0.02),
     2.8px 1.8px 5.3px rgba(0, 0, 0, 0.028),
@@ -240,7 +224,6 @@ $default-color: #5cc95c;
     display: flex;
     flex-direction: column;
     gap: 5px;
-    /* width: fit-content; */
     justify-content: center;
     align-items: center;
   }
@@ -250,13 +233,9 @@ $default-color: #5cc95c;
   display: block;
   position: relative;
   padding-left: 35px;
-  // margin-bottom: 12px;
   align-self: baseline;
   cursor: pointer;
   font-size: 12px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
   & input {
     position: absolute;
@@ -284,13 +263,5 @@ $default-color: #5cc95c;
   &:hover input ~ .checkmark {
     background-color: #ccc;
   }
-
-  /* When the checkbox is checked, add a blue background */
-
-  /* Create the checkmark/indicator (hidden when not checked) */
-
-  /* Show the checkmark when checked */
-
-  /* Style the checkmark/indicator */
 }
 </style>

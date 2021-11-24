@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h2>Добро пожаловать в Список дел!</h2>
+    <h2>Добро пожаловать в Список задач!</h2>
     <div class="all-tasks" v-if="taskGroup.length > 0">
       <task-group-template
         class="task-group"
@@ -63,5 +63,6 @@ export default {
   flex-direction: column;
   justify-content: center;
   gap: 20px;
+  padding: 0px 10px;
 }
 </style>

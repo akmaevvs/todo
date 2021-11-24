@@ -1,6 +1,7 @@
 <template>
   <top-header />
-  <router-view :taskGroup="data" @change-tasks-event="changeTasks" v-on:save-tasks-event="saveTasks" v-on:delete-task="deleteTask" />
+  <router-view class="content" :taskGroup="data" @change-tasks-event="changeTasks" v-on:save-tasks-event="saveTasks" v-on:delete-task="deleteTask" />
+  <bot-footer />
 </template>
 
 <script>
@@ -109,5 +110,10 @@ input::placeholder {
   flex-direction: column;
   gap: 20px;
   justify-content: center;
+
+  margin-bottom: 40px;
+}
+.content {
+  margin-bottom: 60px;
 }
 </style>

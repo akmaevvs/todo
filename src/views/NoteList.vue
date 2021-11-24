@@ -25,7 +25,12 @@
           />
           <img v-else class="title-block__img-palette" :src="paletteImg" />
         </button>
-        <transition name="fade">
+        <palette-modal
+          :show="showPaletteVar"
+          @change-color-event="changeColor"
+          @close-palette-modal-event="showPaletteFunc"
+        />
+        <!-- <transition name="fade">
           <div
             v-if="showPaletteVar"
             class="modal-inner"
@@ -49,7 +54,7 @@
               </div>
             </div>
           </div>
-        </transition>
+        </transition> -->
       </div>
       <div class="inner-content">
         <ul class="tasks-block">
@@ -155,32 +160,6 @@ export default {
         backgroundColor: "#5cc95c",
         textColor: "#ffffff",
       },
-      palette: [
-        {
-          backgroundColor: "#8a2be2",
-          textColor: "#ffffff",
-        },
-        {
-          backgroundColor: "#faebd7",
-          textColor: "#3f3838",
-        },
-        {
-          backgroundColor: "#a52a2a",
-          textColor: "#ffffff",
-        },
-        {
-          backgroundColor: "#blueviolet",
-          textColor: "#3f3838",
-        },
-        {
-          backgroundColor: "#blueviolet",
-          textColor: "#3f3838",
-        },
-        {
-          backgroundColor: "#blueviolet",
-          textColor: "#3f3838",
-        },
-      ],
     };
   },
   beforeMount() {
@@ -214,7 +193,7 @@ export default {
     closeStandartModalInfo() {
       this.showStandartModalInfo = !this.showStandartModalInfo;
     },
-    chageColor(color) {
+    changeColor(color) {
       if (color.textColor === "#3f3838") {
         this.paletteDark = true;
       } else {
@@ -265,6 +244,10 @@ export default {
           this.$emit("change-tasks-event", this.newTaskGroup);
 
           throw new StandartError("Группа успешно обновлена!");
+        } else if (!this.newTaskGroup.title) {
+          throw new StandartError("Введите название группы!");
+        } else if (this.newTaskGroup.tasks.length == 0) {
+          throw new StandartError("Добавьте как минимум одну задачу!");
         } else {
           throw new StandartError("Проверьте данные!");
         }
@@ -287,6 +270,10 @@ export default {
           };
 
           throw new StandartError("Группа успешно добавлена!");
+        } else if (!this.newTaskGroup.title) {
+          throw new StandartError("Введите название группы!");
+        } else if (this.newTaskGroup.tasks.length == 0) {
+          throw new StandartError("Добавьте как минимум одну задачу!");
         } else {
           throw new StandartError("Проверьте данные!");
         }
@@ -300,6 +287,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.modal-inner {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #00000059;
+}
+
 .note-list {
   display: flex;
   flex-direction: column;
@@ -363,54 +362,6 @@ export default {
 $default-text-color: #fff;
 $tasks-block-border-color: #dfdfdf;
 $default-color: #5cc95c;
-.modal-inner {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #00000059;
-}
-
-.modal-palette {
-  height: 350px;
-  width: 350px;
-  display: flex;
-  background: #fff;
-  padding: 20px;
-  box-sizing: border-box;
-  border-radius: 3px;
-  box-shadow: 1.2px 0.7px 2.2px rgba(0, 0, 0, 0.02),
-    2.8px 1.8px 5.3px rgba(0, 0, 0, 0.028),
-    5.3px 3.4px 10px rgba(0, 0, 0, 0.035), 9.4px 6px 17.9px rgba(0, 0, 0, 0.042),
-    17.5px 11.3px 33.4px rgba(0, 0, 0, 0.05), 42px 27px 80px rgba(0, 0, 0, 0.07);
-  flex-direction: column;
-  &__close-modal {
-    cursor: pointer;
-  }
-  &__block-color {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    margin-top: 20px;
-  }
-
-  &__color {
-    width: 50px;
-    height: 30px;
-    cursor: pointer;
-  }
-  &__close-modal {
-    align-self: end;
-    color: #000;
-  }
-  &__title {
-    color: #000;
-  }
-}
 
 .task-group {
   display: flex;
