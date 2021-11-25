@@ -1,19 +1,20 @@
 <template>
   <top-header />
-  <router-view class="content" :taskGroup="data" @change-tasks-event="changeTasks" v-on:save-tasks-event="saveTasks" v-on:delete-task="deleteTask" />
+  <router-view
+    class="content"
+    :taskGroup="data"
+    @change-tasks-event="changeTasks"
+    v-on:save-tasks-event="saveTasks"
+    v-on:delete-task="deleteTask"
+  />
   <bot-footer />
 </template>
 
 <script>
-
 export default {
   mounted() {
     if (localStorage.taskGroup) {
-      console.log("asdfasdf", localStorage.taskGroup);
-      this.data = JSON.parse(localStorage.taskGroup)
-    } else {
-      console.log("basd");
-
+      this.data = JSON.parse(localStorage.taskGroup);
     }
   },
   watch: {
@@ -21,45 +22,41 @@ export default {
       deep: true,
       handler(val) {
         localStorage.taskGroup = JSON.stringify(val);
-      }
-    }
+      },
+    },
   },
   data() {
     return {
-      data: []
-    }
+      data: [],
+    };
   },
   methods: {
     changeTasks(newTaskGroup) {
-      this.data = JSON.parse(JSON.stringify(this.data.filter((item) => {
-        if (item.id == newTaskGroup.id) {
-          Object.keys(item).forEach((key) => {
-            item[key] = newTaskGroup[key]
+      this.data = JSON.parse(
+        JSON.stringify(
+          this.data.filter((item) => {
+            if (item.id == newTaskGroup.id) {
+              Object.keys(item).forEach((key) => {
+                item[key] = newTaskGroup[key];
+              });
+              return item;
+            } else {
+              return item;
+            }
           })
-          return item
-        } else {
-          return item
-        }
-      })))
-      // this.data.filter((item) => {
-      //   if (item.id === newTaskGroup.id) {
-      //     return item
-      //   }
-      // })[0] = newTaskGroup
-
-      console.log(this.data);
+        )
+      );
     },
     saveTasks(newTaskGroup) {
-      this.data.push(newTaskGroup)
+      this.data.push(newTaskGroup);
     },
     deleteTask(id) {
-      console.log("app", id);
       this.data = this.data.filter((item) => {
         if (item.id != id) {
-          return item
+          return item;
         }
-      })
-    }
+      });
+    },
   },
 };
 </script>
@@ -79,12 +76,15 @@ export default {
 .fade-leave-to {
   opacity: 0;
 }
+@font-face {
+  font-family: Gotham Pro;
+  src: url("./assets/GOTHAPROREG.OTF");
+}
 
 * {
   margin: 0;
   padding: 0;
   font-family: Gotham Pro;
-
 }
 body {
   background: #fafafa;
@@ -115,5 +115,6 @@ input::placeholder {
 }
 .content {
   margin-bottom: 60px;
+  padding: 0px 10px;
 }
 </style>

@@ -1,58 +1,67 @@
 <template>
-<transition name="fade">
-<div>
-
-  <div class="inner-task-group">
-    <div class="button-block">
-      <button @click="changeTask" class="task-group-button task-group-button--change">&#9998;</button>
-      <button @click="confirmDeleteTaskGroup" class="task-group-button task-group-button--delete">&#10006;</button>
-
-    </div>
-    <div
-      class="title-block"
-      :style="`background-color:${group.backgroundColor}; color:${group.textColor}`"
-    >
-      <p class="title-block__title"
-      :style="`color:${group.textColor}`"
-      
-      >
-        {{ group.title }}
-      </p>
-    </div>
-    <div class="inner-content">
-      <ul class="tasks-block">
-        <li
-          class="tasks-block__li-task"
-          v-for="task in group.tasks"
-          :key="task.id"
-        >
-          <label class="container-complete" :for="task.id">
-            <input
-              type="checkbox"
-              :id="task.id"
-              :name="task.id"
-              v-model="task.complete"
-            />
-            <span class="checkmark">
-              <template v-if="task.complete">&#10004;</template>
-            </span>
-          </label>
-          <input
-            class="tasks-block__input-task"
-            type="text"
-            v-model="task.title"
-            placeholder="Введите задачу"
-            disabled
-          />
-        </li>
-      </ul>
-    </div>
-  </div>
   <transition name="fade">
-    <confirm-modal :show="showConfirmModal" @close-confirm-modal="closeConfirmModal" @apply-confirm="deleteTaskGroup"/>
+    <div>
+      <div class="inner-task-group">
+        <div class="button-block">
+          <button
+            @click="changeTask"
+            class="task-group-button task-group-button--change"
+          >
+            &#9998;
+          </button>
+          <button
+            @click="confirmDeleteTaskGroup"
+            class="task-group-button task-group-button--delete"
+          >
+            &#10006;
+          </button>
+        </div>
+        <div
+          class="title-block"
+          :style="`background-color:${group.backgroundColor}; color:${group.textColor}`"
+        >
+          <p class="title-block__title" :style="`color:${group.textColor}`">
+            {{ group.title }}
+          </p>
+        </div>
+        <div class="inner-content">
+          <ul class="tasks-block">
+            <li
+              class="tasks-block__li-task"
+              v-for="task in group.tasks"
+              :key="task.id"
+            >
+              <label class="container-complete" :for="task.id">
+                <input
+                  type="checkbox"
+                  :id="task.id"
+                  :name="task.id"
+                  v-model="task.complete"
+                />
+                <span class="checkmark">
+                  <template v-if="task.complete">&#10004;</template>
+                </span>
+              </label>
+              <input
+                class="tasks-block__input-task"
+                type="text"
+                v-model="task.title"
+                placeholder="Введите задачу"
+                disabled
+              />
+            </li>
+          </ul>
+        </div>
+      </div>
+      <transition name="fade">
+        <confirm-modal
+          :show="showConfirmModal"
+          @close-confirm-modal="closeConfirmModal"
+          @apply-confirm="deleteTaskGroup"
+        />
+      </transition>
+    </div>
   </transition>
-</div>
-</transition>
 </template>
 
 <script>
@@ -63,36 +72,31 @@ export default {
       type: Object,
       default: null,
     },
-    
   },
   data() {
     return {
       showConfirmModal: false,
       groupId: "",
-    }
+    };
   },
   methods: {
     confirmDeleteTaskGroup() {
-      this.groupId = this.group.id
-      this.showConfirmModal = !this.showConfirmModal
-
+      this.groupId = this.group.id;
+      this.showConfirmModal = !this.showConfirmModal;
     },
     changeTask() {
-      this.$router.push(`/note-list/${this.group.id}`)
+      this.$router.push(`/create-note/${this.group.id}`);
     },
     deleteTaskGroup() {
-      // this.showConfirmModal = !this.showConfirmModal
-      this.$emit('delete-task', this.groupId)
-
-
+      this.$emit("delete-task", this.groupId);
     },
     applyDelete() {
-      this.confirmValue = true
+      this.confirmValue = true;
     },
     closeConfirmModal() {
-      this.showConfirmModal = !this.showConfirmModal
-    }
-  }
+      this.showConfirmModal = !this.showConfirmModal;
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -116,16 +120,15 @@ $default-color: #5cc95c;
     cursor: pointer;
     line-height: 25px;
     border-radius: 3px;
-    transition: all .2s;
+    transition: all 0.2s;
     &:hover {
-    background: #ffffff8f;
-    box-shadow: 0px 0.2px 0.7px -2px rgba(0, 0, 0, 0.037),
-      0px 0.5px 1.8px -2px rgba(0, 0, 0, 0.053),
-      0px 0.9px 3.4px -2px rgba(0, 0, 0, 0.065),
-      0px 1.6px 6px -2px rgba(0, 0, 0, 0.077),
-      0px 2.9px 11.3px -2px rgba(0, 0, 0, 0.093),
-      0px 7px 27px -2px rgba(0, 0, 0, 0.13);
-
+      background: #ffffff8f;
+      box-shadow: 0px 0.2px 0.7px -2px rgba(0, 0, 0, 0.037),
+        0px 0.5px 1.8px -2px rgba(0, 0, 0, 0.053),
+        0px 0.9px 3.4px -2px rgba(0, 0, 0, 0.065),
+        0px 1.6px 6px -2px rgba(0, 0, 0, 0.077),
+        0px 2.9px 11.3px -2px rgba(0, 0, 0, 0.093),
+        0px 7px 27px -2px rgba(0, 0, 0, 0.13);
     }
     &--change {
       color: #424242;

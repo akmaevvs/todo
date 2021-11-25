@@ -2,9 +2,7 @@
   <div class="modal modal-inner" v-if="show" @click.self="close">
     <div class="modal-content">
       <span class="modal-cross" @click="close">&#10006;</span>
-      <p>
-        Вы уверены?
-      </p>
+      <p>Вы уверены?</p>
       <div class="modal-button-block">
         <standart-button @click="apply(id)">Да</standart-button>
         <standart-button class="no" @click="close">Нет</standart-button>
@@ -24,12 +22,12 @@ export default {
   },
   methods: {
     close() {
-      this.$emit('close-confirm-modal')
+      this.$emit("close-confirm-modal");
     },
     apply() {
-      this.$emit('apply-confirm')
-    }
-  }
+      this.$emit("apply-confirm");
+    },
+  },
 };
 </script>
 
@@ -46,6 +44,7 @@ export default {
     justify-content: center;
     align-items: center;
     z-index: 2;
+    padding: 0 10px;
   }
 
   &-content {
@@ -77,8 +76,6 @@ export default {
     }
   }
   &-cross {
-    /* top: 20px; */
-    /* align-self: end; */
     cursor: pointer;
     position: absolute;
     top: 10px;

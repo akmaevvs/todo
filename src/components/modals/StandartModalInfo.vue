@@ -24,9 +24,9 @@ export default {
   },
   methods: {
     close() {
-      this.$emit('close-standart-modal-info')
-    }
-  }
+      this.$emit("close-standart-modal-info");
+    },
+  },
 };
 </script>
 
@@ -41,6 +41,7 @@ export default {
     right: 0;
     background: #0000009a;
     z-index: 2;
+    padding: 0 10px;
   }
 
   &-content {

@@ -1,22 +1,13 @@
 <template>
   <div class="top-header">
-    <!-- <div class="top-header__logo-block">
-      <img class="logo" :src="logoTodo" />
-    </div> -->
-    <!-- <standart-button @click.prevent="signOut" v-if="loggedIn">Sign out</standart-button>
-    <standart-button :href="'/login'" v-else>Login</standart-button>
-    <standart-button :href="'/register'">Register</standart-button> -->
     <div class="top-header__link-block">
       <standart-link to="/">Список задач</standart-link>
-      <standart-link to="/note-list">Создать задачу</standart-link>
+      <standart-link to="/create-note">Создать задачу</standart-link>
     </div>
   </div>
 </template>
 
 <script>
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-
 import logoTodo from "@/assets/logoTodo.png";
 
 export default {
@@ -27,42 +18,13 @@ export default {
       loggedIn: false,
     };
   },
-  created() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.loggedIn = true;
-      } else {
-        this.loggedIn = false;
-      }
-    });
-  },
-  methods: {
-    async signOut() {
-      try {
-        const signOutData = firebase.auth().signOut();
-        console.log(signOutData);
-
-        await signOutData
-          .then((response) => {
-            console.log(response);
-
-            this.$router.replace({ name: "login" });
-          })
-          .catch((response) => {
-            console.log(response);
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    },
-  },
+  created() {},
+  methods: {},
 };
 </script>
 
 <style lang="scss" scoped>
 .top-header {
-  /* max-width: 530px; */
-  /* max-width: 530px; */
   display: flex;
   justify-content: center;
   position: sticky;
@@ -96,7 +58,5 @@ export default {
       filter: drop-shadow(2px 2px 4px #00000078);
     }
   }
-  // max-width: 330px;
-  // margin-top: 20px;
 }
 </style>

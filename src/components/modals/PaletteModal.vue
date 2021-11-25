@@ -113,8 +113,7 @@ export default {
     },
     changeColor(color) {
       this.$emit("change-color-event", color);
-
-    }
+    },
   },
 };
 </script>
@@ -128,8 +127,9 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-    z-index: 2;
+  z-index: 2;
   background: #00000059;
+  padding: 0 10px;
 }
 
 .modal-palette {
